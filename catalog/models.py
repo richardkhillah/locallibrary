@@ -28,7 +28,7 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-    def get_absolute_path(self):
+    def get_absolute_url(self):
         # TODO: create url mapping, view and template
         return reverse('book-detail', args=[str(self.id)])
 
@@ -63,7 +63,7 @@ class Author(models.Model):
     class Meta:
         ordering = ['last_name', 'first_name']
 
-    def get_absolute_path(self):
+    def get_absolute_url(self):
         """Returns URL to access particualar author instance"""
         return reverse('author-detail', args=[str(self.id)])
 
