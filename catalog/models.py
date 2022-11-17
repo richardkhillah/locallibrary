@@ -65,6 +65,8 @@ class BookInstance(models.Model):
     def display_title(self):
         return self.book.title
 
+    display_title.short_description = "Title"
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
