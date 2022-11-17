@@ -32,6 +32,14 @@ class Book(models.Model):
         # TODO: create url mapping, view and template
         return reverse('book-detail', args=[str(self.id)])
 
+    def display_genre(self):
+        """Create a string for the genre. This is required to display genre
+           since genre is a ManyToManyField
+        """
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = "Genre"
+
 class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                 help_text='Unique ID for this particular book across the library')
