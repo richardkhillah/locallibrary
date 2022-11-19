@@ -21,6 +21,9 @@ def index(request):
 
     num_harry_potter_books = Book.objects.filter(title__icontains='Harry Potter').count()
 
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
@@ -28,6 +31,7 @@ def index(request):
         'num_authors': num_authors,
         'num_genres': num_genres,
         'num_harry_potter_books': num_harry_potter_books,
+        'num_visits': num_visits,
     }
 
     return render(request, 'index.html', context=context)
