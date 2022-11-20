@@ -1,0 +1,9 @@
+{# Displayed after a logout is performed #}
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+<p>Logged out</p>
+
+<a href="{% url 'login' %}">Click to login</a>
+{% endblock %}
