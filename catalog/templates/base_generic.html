@@ -22,11 +22,18 @@
             <li><a href="{% url 'authors' %}">All authors</a></li>
 
             {% if user.is_authenticated %}
-            <li style="padding-top:20px;">User: {{ user.username }}</li>
-            <li> <a href="{% url 'my-borrowed' %}?next={{ request.path }}">My Borrowed</a></li>
-            <li> <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+            <h6 style="padding-top:20px;">User:</h6>
+            <li>{{ user.username }}</li>
+            <li><a href="{% url 'my-borrowed' %}?next={{ request.path }}">My Borrowed</a></li>
+            <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
             {% else %}
-            <li> <a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+            <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+            {% endif %}
+
+            {% if perms.catalog.can_mark_returned %}
+            <hr>
+            <h6 style="padding-top:20px">Staff</h6>
+            <li><a href="{% url 'all-borrowed' %}">All Borrowed</a></li>
             {% endif %}
           </ul>
           {% endblock %}
