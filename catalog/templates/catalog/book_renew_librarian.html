@@ -13,6 +13,9 @@
   <table>
     {{ form.as_table }}
   </table>
-  <input type="submit" value="Submit">
+  <div style="padding-top:16px;">
+    <input class="btn btn-primary" type="submit" value="Submit">
+    <a class="btn btn-secondary" href="{% url 'all-borrowed' %}">Cancel</a>
+  </div>
 </form>
 {% endblock %}

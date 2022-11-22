@@ -2,17 +2,20 @@
 
 {% block content %}
 <h1>All Borrowed Books</h1>
-<ul>
+<table>
   {% for borrowed_book in bookinstance_list %}
-    <li>
-      <a href="{% url 'book-detail' borrowed_book.book.pk %}">{{ borrowed_book.book.title }}</a>
-      <span class="{% if borrowed_book.is_overdue %}text-danger{% endif %}">
-        ({{ borrowed_book.due_back }}) - {{ borrowed_book.borrower.username }}
-      </span>
-      - <a href="{% url 'renew-book-librarian' borrowed_book.id %}">renew</a>
-    </li>
+    <tr>
+      <td>
+          <a href="{% url 'book-detail' borrowed_book.book.pk %}">{{ borrowed_book.book.title }}</a>
+          <span style="padding-right:16px;" class="{% if borrowed_book.is_overdue %}text-danger{% endif %}">
+            ({{ borrowed_book.due_back }}) - {{ borrowed_book.borrower.username }}
+          </span>
+      </td>
+      <td>
+      <a href="{% url 'renew-book-librarian' borrowed_book.id %}">renew</a></td>
+    </tr>
   {% empty %}
     <p>No books currently on loan</p>
   {% endfor %}
-</ul>
+</table>
 {% endblock %}
