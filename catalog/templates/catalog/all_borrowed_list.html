@@ -9,6 +9,7 @@
       <span class="{% if borrowed_book.is_overdue %}text-danger{% endif %}">
         ({{ borrowed_book.due_back }}) - {{ borrowed_book.borrower.username }}
       </span>
+      - <a href="{% url 'renew-book-librarian' borrowed_book.id %}">renew</a>
     </li>
   {% empty %}
     <p>No books currently on loan</p>
