@@ -144,3 +144,31 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
     # Must be overridden
     # Lazy because we're providing a url to a class-based view attribute.
     success_url = reverse_lazy('authors')
+
+class BookCreate(PermissionRequiredMixin, CreateView):
+    """For authenticated and permissioned users, create a new Book entry.
+        success URL defaults to page displaying new/updated info, here will be:
+        'book-detail'
+    """
+    model = Book
+    permission_required = 'can_mark_returned'
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    """For authenticated and permissioned users, create a new Book entry.
+        success URL defaults to page displaying new/updated info, here will be:
+        'book-detail'
+    """
+    model = Book
+    permission_required = 'can_mark_returned'
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    """For authenticated and permissioned users, create a new Book entry.
+        success URL must be specified since record will not exit for
+        'book-detail' to show details.
+    """
+    model = Book
+    permission_required = 'can_mark_returned'
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+    success_url = reverse_lazy('books')

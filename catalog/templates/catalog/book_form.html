@@ -1,12 +1,6 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<!-- TODO: This feels hacky. find way tat doesn't rely on initial data -->
-  {% if form.first_name.initial is null %}
-  <h1>Create new author</h1>
-  {% else %}
-  <h1>Update author</h1>
-  {% endif %}
   <form action="" method="post">
     {% csrf_token %}
     <table>

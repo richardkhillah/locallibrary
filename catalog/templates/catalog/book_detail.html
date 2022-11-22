@@ -17,11 +17,16 @@
             {% elif copy.status == 'm'%}text-danger
             {% else %}text-warning{% endif %}">{{ copy.get_status_display }}
   </p>
-  {% if copy.status != 'a' %}
-  <p><strong>Due to be returned: </strong>{{ copy.due_back }}</p>
-  {% endif %}
+    {% if copy.status != 'a' %}
+    <p><strong>Due to be returned: </strong>{{ copy.due_back }}</p>
+    {% endif %}
   <p><strong>Imprint: </strong>{{ copy.imprint }}</p>
   <p class="text-muted"><strong>ID: </strong>{{ copy.id }}</p>
+  {% empty %}
+  <p>No copies available at this branch</p>
+  <!-- TODO -->
+  <a href="#">Check availability at other branches</a>
+  <p><a href="#">Request a copy.</a></p>
   {% endfor %}
 </div>
 
