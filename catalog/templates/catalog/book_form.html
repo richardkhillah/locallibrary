@@ -1,6 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <!-- TODO: This feel hacky. Find way to make this depend on request or some other thing -->
+  {% if form.title.initial is null %}
+  <h1>Create new book</h1>
+  {% else %}
+  <h1>Update book</h1>
+  {% endif %}
   <form action="" method="post">
     {% csrf_token %}
     <table>
