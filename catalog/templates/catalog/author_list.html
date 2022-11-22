@@ -2,14 +2,27 @@
 
 {% block content %}
 <h1>Author List</h1>
-    <ul>
+{% if perms.catalog.can_mark_returned %}
+<a href="{% url 'author-create' %}">Create author</a>
+{% endif %}
+  <!-- Use a table display for easy columns -->
+    <table>
       {% for author in author_list %}
-        <li>
+        <tr>
+          <!-- All users, authenticated or not, can see basic information -->
+          <td style="padding-right:16px;">
           <a href="{{ author.get_absolute_url }}">
             {{ author.last_name }}, {{ author.first_name }} ({{ author.date_of_birth }} - {{ author.date_of_death }})</a>
-        </li>
+          </td>
+
+          <!-- Only permissioned users can view last two columns of the form -->
+          {% if perms.catalog.can_mark_returned %}
+          <td style="padding-right:8px;"><a href="{% url 'author-update' author.id %}">Update</a></td>
+          <td><a href="{% url 'author-delete' author.id %}" class="text-danger">Delete</a></td>
+          {% endif %}
+        </tr>
         {% empty %}
         <p>There are no author records.</p>
       {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

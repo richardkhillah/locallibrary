@@ -21,6 +21,7 @@
             <li><a href="{% url 'books' %}">All books</a></li>
             <li><a href="{% url 'authors' %}">All authors</a></li>
 
+            <!-- All authenticated users get to see the following -->
             {% if user.is_authenticated %}
             <h6 style="padding-top:20px;">User:</h6>
             <li>{{ user.username }}</li>
@@ -30,6 +31,7 @@
             <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
             {% endif %}
 
+            <!-- Only permissioned users get to see the following -->
             {% if perms.catalog.can_mark_returned %}
             <hr>
             <h6 style="padding-top:20px">Staff</h6>
@@ -42,6 +44,7 @@
           {% block content %}
           {% endblock %}
 
+          <!-- Pagination widget -->
           {% block pagination %}
             {% if is_paginated %}
               <div class="pagination">
