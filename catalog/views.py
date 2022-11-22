@@ -4,8 +4,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from catalog.forms import RenewBookForm
 from .models import Book, Author, BookInstance, Genre
@@ -112,3 +113,34 @@ def renew_book_librarian(request, pk):
     }
 
     return render(request, 'catalog/book_renew_librarian.html', context)
+
+class AuthorCreate(PermissionRequiredMixin, CreateView):
+    """For authenticated and permissioned users, create a new Author entry.
+        success URL defaults to page displaying new/updated info, here will be:
+        'author-detail'
+    """
+    model = Author
+    permission_required = 'can_mark_returned'
+    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+    # initial = {'date_of_death': '11/06/2020'}  # for example of initial data
+
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
+    """For authenticated and permissioned users, create a new Author entry
+        success URL defaults to page displaying new/updated info, here will be:
+        'author-detail'
+    """
+    model = Author
+    permission_required = 'can_mark_returned'
+    # fields = '__all__' # BAD Idea. Future model alterations can cause this to be unsafe.
+    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
+    """For authenticated and permissioned users, create a new Author entry.
+        sucess URL must be specified since record will not exist for
+        author-detail.
+    """
+    model = Author
+    permission_required = 'can_mark_returned'
+    # Must be overridden
+    # Lazy because we're providing a url to a class-based view attribute.
+    success_url = reverse_lazy('authors')
